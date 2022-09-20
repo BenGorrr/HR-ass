@@ -9,14 +9,13 @@ app = Flask(__name__)
 bucket = custombucket
 region = customregion
 
-# db_conn = connections.Connection(
-#     host=customhost,
-#     port=3306,
-#     user=customuser,
-#     password=custompass,
-#     db=customdb
-
-# )
+db_conn = connections.Connection(
+    host=customhost,
+    port=3306,
+    user=customuser,
+    password=custompass,
+    db=customdb
+)
 output = {}
 table = 'employee'
 
@@ -36,6 +35,12 @@ def attendance():
 @app.route("/leave", methods=['GET', 'POST'])
 def leave():
     return render_template('Leave.html')
+
+@app.route("/emp", methods=['GET', 'POST'])
+def emp():
+    return render_template('AddEmp.html')
+
+
 
 @app.route("/about", methods=['POST'])
 def about():

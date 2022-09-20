@@ -1,5 +1,5 @@
-#customhost = "employee.cvizqxos8p8v.us-east-1.rds.amazonaws.com" 
-customhost = "employee.caefqqugke36.us-east-1.rds.amazonaws.com" 
+customhost = "employee.cflq64qv1gnl.us-east-1.rds.amazonaws.com" 
+#customhost = "employee.caefqqugke36.us-east-1.rds.amazonaws.com" 
 customuser = "aws_user"
 custompass = "aws_user"
 customdb = "employee"
