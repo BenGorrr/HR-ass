@@ -45,6 +45,9 @@ def employee():
 def emp():
     return render_template('AddEmp.html')
 
+@app.route("/leaveTable", methods=['GET', 'POST'])
+def leaveTable():
+    return render_template('LeaveTable.html')
 
 
 @app.route("/about", methods=['POST'])

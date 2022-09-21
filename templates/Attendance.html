@@ -2,11 +2,134 @@
 
 {% block title %} Index {% endblock %}
 
+{% block head %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='Attendance.css') }}">
+
+{% endblock %}
+
 {% block content %}
 
+<h1 style="align-items: center;"><b>Employee Attendance</b></h1>
 
 
-<h1>HELLO ATTENDANCE</h1>
+<button style="background-color: yellow; align-items: center;">Late</button>
+
+
+<div class="scrollmenu">
+    <table class="contentCenter">
+        <thead>
+          <tr>
+            <th class="name-col">Student Name</th>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>5</th>
+            <th>6</th>
+            <th>7</th>
+            <th>8</th>
+            <th>9</th>
+            <th>10</th>
+            <th>11</th>
+            <th>12</th>
+            <th>13</th>
+            <th>14</th>
+            <th>15</th>
+            <th>16</th>
+            <th>17</th>
+            <th>18</th>
+            <th>19</th>
+            <th>20</th>
+            <th>21</th>
+            <th>22</th>
+            <th>23</th>
+            <th>24</th>
+            <th>25</th>
+            <th>26</th>
+            <th>27</th>
+            <th>28</th>
+            <th>29</th>
+            <th>30</th>
+            <th>31</th>
+            <th class="missed-col">Absent</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="student">
+            <td class="name-col">Slappy the Frog</td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="missed-col">0</td>
+          </tr>
+          <tr class="student">
+            <td class="name-col">Lilly the Lizard</td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="attend-col"><input type="checkbox"></td>
+            <td class="missed-col">0</td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+
 
 
 
