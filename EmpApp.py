@@ -36,6 +36,10 @@ def attendance():
 def leave():
     return render_template('Leave.html')
 
+@app.route("/employee", methods=['GET', 'POST'])
+def employee():
+    return render_template('Employee.html')
+
 @app.route("/emp", methods=['GET', 'POST'])
 def emp():
     return render_template('AddEmp.html')
