@@ -2,14 +2,47 @@
 
 {% block title %} Index {% endblock %}
 
+{% block head %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='Leave.css') }}">
+
+
+{% endblock %}
+
 {% block content %}
 
+<h1 style="align-items: center;"><b>Application for Leave </b></h1>
 
+<div class="contentCenter">
 
-<h1>HELLO LEAVE</h1>
+    <a href="{{url_for('leaveTable')}}" style="float: right;">View</a>
+    
+    <form action="/action_page.php">
+      <label for="fname"><b>First Name</b></b></label>
+      <input type="text" id="fname" name="firstname" placeholder="Your name..">
+  
+      <label for="lname"><b>Last Name</b></label>
+      <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+  
+      <label for="leaveType"><b>Type of leave</b></label>
+      <select id="leaveType" name="leaveType">
+        <option value="annual">Annual Leave</option>
+        <option value="unpaid">Unpaid Leave</option>
+        <option value="study">Study Leave</option>
+      </select>
 
-
-
-
+      <label for="description">Description</label>
+      <input type="text" id="desc" name="description"><br><br>
+      
+      <label for="strDate">Start date</label>
+      <input type="date" id="datemin" name="datemin"><br><br>
+      
+      <label for="endDate">End date:</label>
+      <input type="date" id="datemax" name="datemax"><br><br>
+    
+      <input type="submit" value="Submit">
+    </form>
+    
+  </div>
 
 {% endblock %}

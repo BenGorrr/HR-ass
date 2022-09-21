@@ -1,0 +1,76 @@
+h1 {
+    text-align: center;
+    color: rgb(255, 255, 255);
+  }
+
+  .contentCenter {
+    margin: left 200px;;
+    padding: 10px;
+    align-items: center;
+  }
+
+  body {
+    line-height: 1.6;
+    margin: 2em;
+    min-width: 990px;
+}
+
+th {
+    background-color: #001f3f;
+    color: #fff;
+    padding: 0.5em 1em;
+}
+
+td {
+    border-top: 1px solid #eee;
+    padding: 0.5em 1em;
+}
+
+input {
+    cursor: pointer;
+}
+
+/* Column types */
+th.missed-col {
+    background-color: #f00;
+}
+
+td.missed-col {
+    background-color: #ffecec;
+    color: #f00;
+    text-align: center;
+}
+
+.name-col {
+    text-align: left;
+}
+
+/* Scroll menu */
+div.scrollmenu {
+    background-color: #333;
+    overflow: auto;
+    white-space: nowrap;
+    margin-left: 10%;
+  }
+  
+  div.scrollmenu a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+  }
+  
+  div.scrollmenu a:hover {
+    background-color: #777;
+  }
+
+/* Button */
+  .button {
+    display: inline-block;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 40px;
+    width: 200px;
+  }
+  
