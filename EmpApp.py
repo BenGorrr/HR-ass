@@ -1,3 +1,4 @@
+from crypt import methods
 from flask import Flask, render_template, request
 from pymysql import connections, cursors
 import os
@@ -137,6 +138,56 @@ def AddEmp():
 
     #print("all modification done...")
     #return render_template('AddEmpOutput.html', name=emp_name)
+
+
+
+@app.route("/addPayroll", methods=['POST'])
+def AddSalary():
+    empID = request.form['EmpID']
+    empName = request.form['EmpName']
+    empRate = request.form['EmpRate']
+    empOT = request.form['EmpOT']
+    empType = request.form.get('EmpType')
+    print(empType)
+
+    insert_sql = "INSERT INTO payroll (emp_ID, emp_Name, emp_Rate, emp_OT, emp_Type) VALUES (%s, %s, %s, %s, %s)"
+    cursor = db_conn.cursor()
+
+    try:
+
+        cursor.execute(insert_sql, (empID, empName, int(empRate), int(empOT), empType))
+        db_conn.commit()
+    
+    finally:
+        cursor.close()
+
+    print("all modification done...")
+    return render_template('Payroll.html')
+ 
+# (B) HELPER FUNCTION - SEARCH USERS
+def getusers(search):
+    cursor = db_conn.cursor()
+    cursor.execute(
+        "SELECT * FROM payroll WHERE emp_ID=%s",
+        (search)
+    )
+    results = cursor.fetchall()
+    cursor.close()
+    return results
+
+@app.route("/searchPayroll", methods=['GET','POST'])
+def searchPayroll():
+    # (C1) SEARCH FOR USERS
+    if request.method == "POST":
+        data = dict(request.form)
+        print(data)
+        users = getusers(data["searchEmp"])
+        print(users)
+    else:
+        users = []
+    
+    # (C2) RENDER HTML PAGE
+    return render_template("Payroll.html", usr=users[0])
 
 
 

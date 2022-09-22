@@ -17,44 +17,72 @@
         <h1 class="w3-jumbo"><span class="w3-hide-small">Payroll Page</h1>
     </header>
 
-    <div class="w3-padding-64 w3-content w3-text-grey" id="contact">
+    <div class="w3-padding-64 w3-content w3-text-grey" id="addPayroll">
         <h2 class="w3-text-light-grey">Add Payroll</h2>
-        <hr style="width:200px" class="w3-opacity">
+        <hr style="width:810px" class="w3-opacity">
 
-        <form action="/action_page.php" target="_blank">
+        <form action="/addPayroll" method="POST">
             <p><input class="w3-input w3-padding-16" type="text" placeholder="Employee ID" required name="EmpID"></p>
             <p><input class="w3-input w3-padding-16" type="text" placeholder="Name" required name="EmpName"></p>
-            <p><input class="w3-input w3-padding-16" type="text" placeholder="Rate Per Day" required name="Message"></p>
-            <p><input class="w3-input w3-padding-16" type="text" placeholder="OT Rate" required name="Message"></p>
-            <select name="type" id="type" class="w3-input w3-padding-16">
-                <option value="part">Part-Time</option>
-                <option value="full">Full-Time</option>
+            <p><input class="w3-input w3-padding-16" type="text" placeholder="Rate Per Day" required name="EmpRate"></p>
+            <p><input class="w3-input w3-padding-16" type="text" placeholder="OT Rate" required name="EmpOT"></p>
+            <select name="EmpType" class="w3-input w3-padding-16">
+                <option value="Part-Time">Part-Time</option>
+                <option value="Full-Time">Full-Time</option>
             </select>
+            
             <p>
                 <button class="w3-button w3-light-grey w3-padding-large" type="submit">
                     ADD SALARY
                 </button>
             </p>
         </form>
-        <!-- End Contact Section -->
     </div>
 
-    <!-- Add Payroll Section -->
-    <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="about">
-        <h2 class="w3-text-light-grey">Add Salary</h2>
-        <hr style="width:200px" class="w3-opacity">
-        <p>Some text about me. Some text about me. I am lorem ipsum consectetur adipiscing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-            ullamco laboris nisi ut aliquip
-            ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-            fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-            deserunt mollit anim id est laborum consectetur
-            adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        </p>
-        <h3 class="w3-padding-16 w3-text-light-grey">My Skills</h3>
-        
-        </div><br>
+    <!-- Search Employee Section -->
+    <div class="w3-content w3-justify w3-text-grey" id="search" style="padding-right: 64px">
+        <h2 class="w3-text-light-grey">Search Employee</h2>
+        <hr style="width:510px" class="w3-opacity">
+        <form action="/searchPayroll" method="POST">
+            <label for="searchEmp" style="font-size: large; margin-right: 20px;">Enter Employee ID:</label>
+            <input type="search" id="searchEmp" name="searchEmp" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px">
+            <input type="submit" value="SEARCH" style="padding: 6px; margin-left: 10px">
+            </div><br>
+            {% if usr | length != 0 %}
+            <label for="empName" style="font-size: large; margin-right: 52px; padding-right: 78px; padding-bottom: 20px;">Employee Name:</label>
+            <input type="text" id="empName" name="empName" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px;" disabled value="{{usr[2]}}"><br>
+            <label for="empAttendance" style="font-size: large; margin-right: 52px; padding-right: 15px">Employee's Attendance:</label>
+            <input type="text" id="empAttendance" name="empAttendance" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px" disabled><br>
+            <label for="empPayable" style="font-size: large; margin-right: 114px; padding-right: 15px">Amount Payable:</label>
+            <input type="text" id="empPayable" name="empPayable" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px" disabled><br>
+            <label for="empPayStatus" style="font-size: large; margin-right: 170px; padding-right: 15px">Pay Status:</label>
+            <input type="text" id="empPayStatus" name="empPayStatus" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px" disabled value="{{usr[6]}}"><br>    
+                
+            {% else %}
+            <label for="empName" style="font-size: large; margin-right: 52px; padding-right: 78px; padding-bottom: 20px;">Employee Name:</label>
+            <input type="text" id="empName" name="empName" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px;" disabled><br>
+            <label for="empAttendance" style="font-size: large; margin-right: 52px; padding-right: 15px">Employee's Attendance:</label>
+            <input type="text" id="empAttendance" name="empAttendance" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px" disabled><br>
+            <label for="empPayable" style="font-size: large; margin-right: 114px; padding-right: 15px">Amount Payable:</label>
+            <input type="text" id="empPayable" name="empPayable" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px" disabled><br>
+            <label for="empPayStatus" style="font-size: large; margin-right: 170px; padding-right: 15px">Pay Status:</label>
+            <input type="text" id="empPayStatus" name="empPayStatus" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px" disabled><br>    
+            {% endif %}
+
+        </form>
+        <form action="/payNow" method="POST">
+            <p>
+                {% if usr[6] == 'UNPAID' %}
+                <button id="payBtn" class="w3-button w3-light-grey w3-padding-large" type="submit" style="margin-left: 220px">
+                    PAY NOW
+                </button>
+                {% else %}
+                <button id="payBtn" class="w3-button w3-light-grey w3-padding-large" type="submit" style="margin-left: 220px" disabled>
+                    PAY NOW
+                </button>
+                {% endif %}
+            </p>
+        </form>
     </div>
 
     <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="about">
