@@ -72,14 +72,21 @@
         </form>
         <form action="/payNow" method="POST">
             <p>
-                {% if usr[6] == 'UNPAID' %}
-                <button id="payBtn" class="w3-button w3-light-grey w3-padding-large" type="submit" style="margin-left: 220px">
-                    PAY NOW
-                </button>
+                {% if usr | length != 0 %}
+                    {% if usr[6] == 'UNPAID' %}
+                        <button id="payBtn" class="w3-button w3-light-grey w3-padding-large" type="submit" style="margin-left: 220px">
+                            PAY NOW
+                        </button>
+                    {% else %}
+                        <button id="payBtn" class="w3-button w3-light-grey w3-padding-large" type="submit" style="margin-left: 220px" disabled>
+                            PAY NOW
+                        </button>
+                {% endif %}
+
                 {% else %}
-                <button id="payBtn" class="w3-button w3-light-grey w3-padding-large" type="submit" style="margin-left: 220px" disabled>
-                    PAY NOW
-                </button>
+                    <button id="payBtn" class="w3-button w3-light-grey w3-padding-large" type="submit" style="margin-left: 220px" disabled>
+                        PAY NOW
+                    </button>
                 {% endif %}
             </p>
         </form>
