@@ -8,7 +8,7 @@ table {
     margin:auto;
     padding: 10px;
     align-items: center;
-    width: 70%;
+    width: 80%;
   }
   
   th, td {
@@ -17,7 +17,10 @@ table {
     border-bottom: 1px solid #ddd;
   }
   
-  tr:hover {background-color: teal;}
+  tr:hover {
+    background-color: teal;
+    color: white;
+}
 
   .editButton{
     width: 100px;

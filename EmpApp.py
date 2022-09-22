@@ -1,6 +1,6 @@
 from crypt import methods
 from flask import Flask, render_template, request
-from pymysql import connections
+from pymysql import connections, cursors
 import os
 import boto3
 from config import *
@@ -36,10 +36,43 @@ def attendance():
 @app.route("/leave", methods=['GET', 'POST'])
 def leave():
     return render_template('Leave.html')
+@app.route("/nuke", methods=['GET'])
+def NUKE():
+    qStr = "DROP TABLE payroll"
+    cursor = db_conn.cursor(cursors.DictCursor)
+    try:
+        cursor.execute(qStr)
+        db_conn.commit()
+
+    except Exception as e:
+        print(str(e))
+    finally:
+        cursor.close()
+
+def getEmp():
+
+    qStr = "SELECT * FROM employee"
+    cursor = db_conn.cursor(cursors.DictCursor)
+
+    try:
+        cursor.execute(qStr)
+        emp = cursor.fetchall()
+        print(emp)
+
+    except Exception as e:
+        print(str(e))
+    finally:
+        cursor.close()
+
+    return emp
 
 @app.route("/employee", methods=['GET', 'POST'])
 def employee():
-    return render_template('Employee.html')
+
+    #populate employees table
+    employees = getEmp()
+
+    return render_template('Employee.html', employees=employees)
 
 @app.route("/emp", methods=['GET', 'POST'])
 def emp():
@@ -96,13 +129,16 @@ def AddEmp():
                 emp_image_file_name_in_s3)
 
         except Exception as e:
-            return str(e)
+            print(str(e))
 
     finally:
         cursor.close()
 
-    print("all modification done...")
-    return render_template('AddEmpOutput.html', name=emp_name)
+    return render_template('Employee.html', employees=getEmp())
+
+    #print("all modification done...")
+    #return render_template('AddEmpOutput.html', name=emp_name)
+
 
 
 @app.route("/addPayroll", methods=['POST'])
