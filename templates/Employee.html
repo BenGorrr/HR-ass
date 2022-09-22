@@ -34,15 +34,19 @@
 
         <table class="w3-table w3-bordered">
             <tr>
+                <th>Emp ID</th>
                 <th>First Name</th>
                 <th>Last Name</th>
-                <th>Points</th>
+                <th>Location</th>
             </tr>
+            {% for emp in employees %}
             <tr>
-                <td>Jill</td>
-                <td>Smith</td>
-                <td>50</td>
+                <td>{{ emp.emp_id }}</td>
+                <td>{{ emp.first_name }}</td>
+                <td>{{ emp.last_name }}</td>
+                <td>{{ emp.location }}</td>
             </tr>
+            {% endfor %}
         </table>
     </div>
     
