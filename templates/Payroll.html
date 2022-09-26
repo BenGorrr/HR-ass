@@ -53,6 +53,8 @@
             <input type="text" id="empName" name="empName" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px;" disabled value="{{usr[2]}}"><br>
             <label for="empAttendance" style="font-size: large; margin-right: 52px; padding-right: 15px">Employee's Attendance:</label>
             <input type="text" id="empAttendance" name="empAttendance" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px" disabled><br>
+            <label for="empDailyRate" style="font-size: large; margin-right: 52px; padding-right: 15px">Daily Rate:</label>
+            <input type="text" id="empDailyRate" name="empDailyRate" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px; margin-left: 120px" disabled value="{{usr[3]}}"><br>
             <label for="empPayable" style="font-size: large; margin-right: 114px; padding-right: 15px">Amount Payable:</label>
             <input type="text" id="empPayable" name="empPayable" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px" disabled><br>
             <label for="empPayStatus" style="font-size: large; margin-right: 170px; padding-right: 15px">Pay Status:</label>
@@ -63,6 +65,8 @@
             <input type="text" id="empName" name="empName" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px;" disabled><br>
             <label for="empAttendance" style="font-size: large; margin-right: 52px; padding-right: 15px">Employee's Attendance:</label>
             <input type="text" id="empAttendance" name="empAttendance" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px" disabled><br>
+            <label for="empDailyRate" style="font-size: large; margin-right: 52px; padding-right: 15px">Daily Rate:</label>
+            <input type="text" id="empDailyRate" name="empDailyRate" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px; margin-left: 120px" disabled><br>
             <label for="empPayable" style="font-size: large; margin-right: 114px; padding-right: 15px">Amount Payable:</label>
             <input type="text" id="empPayable" name="empPayable" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px" disabled><br>
             <label for="empPayStatus" style="font-size: large; margin-right: 170px; padding-right: 15px">Pay Status:</label>
@@ -92,21 +96,26 @@
         </form>
     </div>
 
-    <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="about">
-        <h2 class="w3-text-light-grey">Add Salary</h2>
-        <hr style="width:200px" class="w3-opacity">
-        <p>Some text about me. Some text about me. I am lorem ipsum consectetur adipiscing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-            ullamco laboris nisi ut aliquip
-            ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-            fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-            deserunt mollit anim id est laborum consectetur
-            adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        </p>
-        <h3 class="w3-padding-16 w3-text-light-grey">My Skills</h3>
-        
-        </div><br>
+     <!-- Edit Payroll Section -->
+    <div class="w3-content w3-justify w3-text-grey" id="edit" style="margin-left: 150px">
+        <h2 class="w3-text-light-grey">Edit Payroll</h2>
+        <hr style="width:510px" class="w3-opacity">
+        <form action="/editPayroll" method="POST">
+            <label for="searchEmpPayroll" style="font-size: large; margin-right: 20px;">Enter Employee ID:</label>
+            <input type="search" id="searchEmpPayroll" name="searchEmpPayroll" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px">
+            <input type="submit" value="SEARCH" style="padding: 6px; margin-left: 10px">
+            </div><br>
+            <label for="editField" style="font-size: large; margin-left: 150px;">Select Field to Edit:</label>
+            <select name="editFieldSelect" style="padding-left: 90px; padding-right: 70px; padding-top: 8px; padding-bottom: 8px; margin-left: 20px;">
+                <option value="Daily-Rate">Daily-Rate</option>
+                <option value="OT-Rate">OT-Rate</option>
+                <option value="Employment Type">Employment Type</option>
+            </select><br><br>
+            <label for="newEmpPayroll" style="font-size: large; margin-left: 150px;">Enter New Value:</label>
+            <input type="search" id="newEmpPayroll" name="newEmpPayroll" style="padding-left: 30px; padding-right: 30px; padding-top: 6px; padding-bottom: 6px; margin-left: 40px;">
+            <input type="submit" value="EDIT" style="padding-top: 6px; padding-bottom: 6px; margin-left: 10px; padding-left: 15px; padding-right: 15px;">
+            </div><br>
+        </form>
     </div>
 
     <!-- Contact Section -->

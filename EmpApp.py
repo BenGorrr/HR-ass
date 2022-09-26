@@ -188,6 +188,7 @@ def searchPayroll():
     # (C2) RENDER HTML PAGE
     return render_template("Payroll.html", usr=users[0])
 
+
 def getLastID():
     cursor = db_conn.cursor()
 
@@ -199,6 +200,20 @@ def getLastID():
 
     print(id)
     return id
+
+@app.route("/editPayroll", methods=['GET','POST'])
+def searchEditPayroll():
+    # (C1) SEARCH FOR USERS
+    if request.method == "POST":
+        data = dict(request.form)
+        print(data)
+        users = getusers(data["searchEmpPayroll"])
+        print(users)
+    else:
+        users = []
+    
+    # (C2) RENDER HTML PAGE
+    return render_template("Payroll.html")
 
 @app.route("/applyLeave", methods=['POST'])
 def applyLeave():
