@@ -74,51 +74,46 @@
             {% endif %}
 
         </form>
-        <form action="/payNow" method="POST">
-            <p>
-                {% if usr | length != 0 %}
-                    {% if usr[6] == 'UNPAID' %}
-                        <button id="payBtn" class="w3-button w3-light-grey w3-padding-large" type="submit" style="margin-left: 220px">
-                            PAY NOW
-                        </button>
+        {% if usr | length != 0 %}
+            <form action="{{ url_for('payNow', id=usr[1]) }}" method="POST">
+        {% else %}
+            <form action="" method="POST">
+        {% endif %}
+                <p>
+                    {% if usr | length != 0 %}
+                        {% if usr[6] == 'UNPAID' %}
+                            <input id="payBtn" class="w3-button w3-light-grey w3-padding-large" type="submit" style="margin-left: 220px" value="PAY NOW">
+                        {% else %}
+                            <input id="payBtn" class="w3-button w3-light-grey w3-padding-large" type="submit" style="margin-left: 220px" value="PAY NOW" disabled> 
+                    {% endif %}
+
                     {% else %}
-                        <button id="payBtn" class="w3-button w3-light-grey w3-padding-large" type="submit" style="margin-left: 220px" disabled>
-                            PAY NOW
-                        </button>
-                {% endif %}
-
-                {% else %}
-                    <button id="payBtn" class="w3-button w3-light-grey w3-padding-large" type="submit" style="margin-left: 220px" disabled>
-                        PAY NOW
-                    </button>
-                {% endif %}
-            </p>
-        </form>
+                        <input id="payBtn" class="w3-button w3-light-grey w3-padding-large" type="submit" style="margin-left: 220px" value="PAY NOW" disabled> 
+                    {% endif %}
+                </p>
+            </form>
     </div>
+    <br><br>
+    <form action="/generateRep" method="POST">
+        <input class="w3-button w3-light-grey w3-padding-large"type="submit" value="GENERATE PAYROLL REPORT" style= "margin-left: 400px; padding: 30px;"><br><br>
+        {% if num is defined %}
+            {% if num !=0 %}
+                <label for="totalEmpPaid" style="font-size: large; margin-right: 52px; padding-right: 78px; padding-bottom: 20px;margin-left: 200px;">Total Number of Employee Paid:</label>
+                <input type="text" id="totalEmpPaid" name="totalEmpPaid" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px;" disabled value="{{num}}"><br>
+                <label for="totalAmountPaid" style="font-size: large; margin-right: 232px; padding-right: 15px; margin-left: 200px;">Total Amount Paid:</label>
+                <input type="text" id="totalAmountPaid" name="totalAmountPaid" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px" disabled><br>
+            {% else %}
+                <label for="totalEmpPaid" style="font-size: large; margin-right: 52px; padding-right: 78px; padding-bottom: 20px; margin-left: 200px;">Total Number of Employee Paid:</label>
+                <input type="text" id="totalEmpPaid" name="totalEmpPaid" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px;" disabled value="0 Employee Paid"><br>
+                <label for="totalAmountPaid" style="font-size: large; margin-right: 232px; padding-right: 15px; margin-left: 200px">Total Amount Paid:</label>
+                <input type="text" id="totalAmountPaid" name="totalAmountPaid" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px" disabled value="0 Salary Paid"><br>
+            {% endif %}
+        {% endif %}
 
-     <!-- Edit Payroll Section -->
-    <div class="w3-content w3-justify w3-text-grey" id="edit" style="margin-left: 150px">
-        <h2 class="w3-text-light-grey">Edit Payroll</h2>
-        <hr style="width:510px" class="w3-opacity">
-        <form action="/editPayroll" method="POST">
-            <label for="searchEmpPayroll" style="font-size: large; margin-right: 20px;">Enter Employee ID:</label>
-            <input type="search" id="searchEmpPayroll" name="searchEmpPayroll" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px">
-            <input type="submit" value="SEARCH" style="padding: 6px; margin-left: 10px">
-            </div><br>
-            <label for="editField" style="font-size: large; margin-left: 150px;">Select Field to Edit:</label>
-            <select name="editFieldSelect" style="padding-left: 90px; padding-right: 70px; padding-top: 8px; padding-bottom: 8px; margin-left: 20px;">
-                <option value="Daily-Rate">Daily-Rate</option>
-                <option value="OT-Rate">OT-Rate</option>
-                <option value="Employment Type">Employment Type</option>
-            </select><br><br>
-            <label for="newEmpPayroll" style="font-size: large; margin-left: 150px;">Enter New Value:</label>
-            <input type="search" id="newEmpPayroll" name="newEmpPayroll" style="padding-left: 30px; padding-right: 30px; padding-top: 6px; padding-bottom: 6px; margin-left: 40px;">
-            <input type="submit" value="EDIT" style="padding-top: 6px; padding-bottom: 6px; margin-left: 10px; padding-left: 15px; padding-right: 15px;">
-            </div><br>
-        </form>
-    </div>
+    </form>
+    
 
     <!-- Contact Section -->
-    
+
 
 {% endblock %}
