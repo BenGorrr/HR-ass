@@ -13,16 +13,25 @@
 
 <h1 style="align-items: center;"><b>Application for Leave </b></h1>
 
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+           <div class="w3-panel w3-{{ category }}" role="alert"> {{ message }}</div>
+        {% endfor %}
+      {% endif %}
+{% endwith %}
+
 <div class="contentCenter">
 
     <a href="{{url_for('leaveTable')}}" style="float: right;">View</a>
     
-    <form action="/action_page.php">
-      <label for="fname"><b>First Name</b></b></label>
-      <input type="text" id="fname" name="firstname" placeholder="Your name..">
+    <form action="/applyLeave" method="post">
+      <label for="empId"><b>Employee ID</b></b></label>
+      <input type="text" id="empId" name="empId" placeholder="Employee ID">
   
-      <label for="lname"><b>Last Name</b></label>
-      <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+      <label for="name"><b>Name</b></label>
+      <input type="text" id="name" name="name" placeholder="Employee Name..">
   
       <label for="leaveType"><b>Type of leave</b></label>
       <select id="leaveType" name="leaveType">
@@ -32,7 +41,7 @@
       </select>
 
       <label for="description">Description</label>
-      <input type="text" id="desc" name="description"><br><br>
+      <input type="text" id="desc" name="desc"><br><br>
       
       <label for="strDate">Start date</label>
       <input type="date" id="datemin" name="datemin"><br><br>
