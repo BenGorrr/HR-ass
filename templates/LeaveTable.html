@@ -6,31 +6,68 @@
 
 <link rel="stylesheet" href="{{ url_for('static', filename='LeaveTable.css') }}">
 
+<!-- 
+<script>
+  function myFunction() {
+    let text = "Cancel the leave?";
+    if (confirm(text) == true) {
+      text = "Leave have been delete!";
+    } else {
+      text = "Leave is remain.";
+    }
+    document.getElementById("demo").innerHTML = text;
+  }
+  </script> -->
+
 {% endblock %}
 
 {% block content %}
 
 <h1 style="align-items: center;"><b>Application for Leave </b></h1>
 
+<!--repeater -->
 <table>
     <tr>
-      <th>First Name</th>
-      <th>Last Name</th>
+      <th>Name</th>
       <th>Leave Type</th>
       <th>Start Date</th>
       <th>End Date</th>
       <th> </th>
       <th> </th>
     </tr>
+    {% for empLeave in empLeaves %}  <!--Start loop to take the data from the database -->
     <tr>
-      <td>Peter</td>
-      <td>Griffin</td>
-      <td>Study</td>
-      <td>1/1/2022</td>
-      <td>2/2/2022</td>
-      <td><button class="editButton">Edit</button> <button class="cancelButton">Cancel</button></td>
+      <td>{{ empLeave.emp_name }}</td>
+      <td>{{ empLeave.leave_type }}</td> 
+      <td>{{ empLeave.startDate }}</td> 
+      <td>{{ empLeave.endDate }}</td>   
+      <td><button onclick="document.getElementById('id{{empLeave.leave_id}}').style.display='block'" class="cancelButton">Cancel</button></td>
     </tr>
-    
+    {% endfor %} <!--End loop -->
   </table>
+
+  {% for empLeave in empLeaves %}  <!--Start loop to take the data from the database -->
+
+
+  <div id='id{{ empLeave.leave_id }}' class="w3-modal">
+    <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+
+      <div class="w3-center"><br>
+           <p>Cancel leaves?</p>
+        <span onclick="document.getElementById('id{{empLeave.leave_id}}').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+
+      </div>
+
+      <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+        <button onclick="document.getElementById('id{{empLeave.leave_id}}').style.display='none'" type="button" class="w3-button w3-red">Cancel</button>
+        <!-- <button onclick="{{url_for('delete_leave', leave_id=empLeave.leave_id)}}" style="float:right" type="button" class="w3-button w3-black">Confirm</button> -->
+        <form action="{{url_for('delete_leave', leave_id=empLeave.leave_id)}}" method="post">
+          <input style="float:right" class="w3-button w3-black" type="submit" value="Confirm">
+        </form>
+      </div>
+
+    </div>
+  </div>
+  {% endfor %} <!--End loop -->
 
 {% endblock %}

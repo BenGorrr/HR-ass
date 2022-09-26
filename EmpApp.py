@@ -65,6 +65,40 @@ def getEmp():
 
     return emp
 
+def getLeaves():
+
+    qStr = "SELECT * FROM Leaves"
+    cursor = db_conn.cursor(cursors.DictCursor)
+
+    try:
+        cursor.execute(qStr)
+        leaves = cursor.fetchall()
+        print(leaves)
+
+    except Exception as e:
+        print(str(e))
+    finally:
+        cursor.close()
+
+    return leaves
+
+@app.route("/delete_leave/<int:leave_id>", methods=['POST'])
+def delete_leave(leave_id):
+    empLeaves = getLeaves()
+
+    qStr = "DELETE FROM Leaves WHERE leave_id=%s"
+    cursor = db_conn.cursor(cursors.DictCursor)
+    try:
+        cursor.execute(qStr,(leave_id))
+        db_conn.commit()
+
+    except Exception as e:
+        print(str(e))
+    finally:
+        cursor.close()
+    
+    return redirect(url_for('leaveTable'))
+
 @app.route("/employee", methods=['GET', 'POST'])
 def employee():
 
@@ -79,7 +113,11 @@ def emp():
 
 @app.route("/leaveTable", methods=['GET', 'POST'])
 def leaveTable():
-    return render_template('LeaveTable.html')
+
+    #populate employees table // are the leave table and emp table same? 
+    empLeaves = getLeaves()
+
+    return render_template('LeaveTable.html', empLeaves=empLeaves)
 
 
 @app.route("/about", methods=['POST'])
