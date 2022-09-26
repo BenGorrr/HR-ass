@@ -35,6 +35,7 @@
   
       <label for="leaveType"><b>Type of leave</b></label>
       <select id="leaveType" name="leaveType">
+        <option value="" selected disabled hidden>-Please select a leave type-</option>
         <option value="annual">Annual Leave</option>
         <option value="unpaid">Unpaid Leave</option>
         <option value="study">Study Leave</option>
@@ -48,6 +49,8 @@
       
       <label for="endDate">End date:</label>
       <input type="date" id="datemax" name="datemax"><br><br>
+
+      Image Evidence Prove: <input type=file name="emp_image_file" style="height:25px;font-size:14pt;color:grey;"> <br><br>
     
       <input type="submit" value="Submit">
     </form>
