@@ -188,6 +188,18 @@ def searchPayroll():
     # (C2) RENDER HTML PAGE
     return render_template("Payroll.html", usr=users[0])
 
+def getLastID():
+    cursor = db_conn.cursor()
+
+    try:
+        cursor.execute("SELECT LAST_INSERT_ID()")
+        id = cursor.fetchone()
+    finally:
+        cursor.close()
+
+    print(id)
+    return id
+
 @app.route("/applyLeave", methods=['POST'])
 def applyLeave():
     data = request.form
@@ -197,16 +209,47 @@ def applyLeave():
     desc = data['desc']
     startDate = data['datemin']
     endDate = data['datemax']
+    leave_image_file = request.files['leave_image_file']
 
+    
+    
+    #print(request.form)
 
-    print(request.form)
-
-    insert_sql = "INSERT INTO Leaves (emp_id, emp_name, leave_desc, leave_type, leave_startDate, leave_endDate) VALUES (%s, %s, %s, %s, %s, %s)"
+    insert_sql = "INSERT INTO Leaves (emp_id, emp_name, leave_desc, leave_type, leave_startDate, leave_endDate) VALUES (%s, %s, %s, %s, %s, %s);"
     cursor = db_conn.cursor()
+
+    # if leave_image_file.filename == "":
+    #     return "Please select a file"
 
     try:
         cursor.execute(insert_sql, (empId, name, desc, leaveType, startDate, endDate))
         db_conn.commit()
+        leave_id = getLastID()
+
+        if leave_image_file.filename != "":
+
+            leave_image_file_name_in_s3 = "leave-id-" + str(leave_id) + "_image_file"
+            s3 = boto3.resource('s3')
+
+            try:
+                print("Data inserted in MySQL RDS... uploading leave image to S3...")
+                s3.Bucket(custombucket).put_object(Key=leave_image_file_name_in_s3, Body=leave_image_file)
+                bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
+                s3_location = (bucket_location['LocationConstraint'])
+
+                if s3_location is None:
+                    s3_location = ''
+                else:
+                    s3_location = '-' + s3_location
+
+                object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+                    s3_location,
+                    custombucket,
+                    leave_image_file_name_in_s3)
+
+            except Exception as e:
+                print(str(e))
+
         flash("Leave applied!", 'green')
     except Exception as e:
         print(str(e))

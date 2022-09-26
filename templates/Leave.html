@@ -26,7 +26,7 @@
 
     <a href="{{url_for('leaveTable')}}" style="float: right;">View</a>
     
-    <form action="/applyLeave" method="post">
+    <form action="/applyLeave" method="post" enctype="multipart/form-data">
       <label for="empId"><b>Employee ID</b></b></label>
       <input type="text" id="empId" name="empId" placeholder="Employee ID">
   
@@ -50,7 +50,7 @@
       <label for="endDate">End date:</label>
       <input type="date" id="datemax" name="datemax"><br><br>
 
-      Image Evidence Prove: <input type=file name="emp_image_file" style="height:25px;font-size:14pt;color:grey;"> <br><br>
+      Image Evidence Prove: <input type=file name="leave_image_file" style="height:25px;font-size:14pt;color:grey;"> <br><br>
     
       <input type="submit" value="Submit">
     </form>
