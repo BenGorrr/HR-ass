@@ -201,11 +201,11 @@ def applyLeave():
 
     print(request.form)
 
-    insert_sql = "INSERT INTO leave (emp_id) VALUES (%s)"
+    insert_sql = "INSERT INTO Leaves (emp_id, emp_name, leave_desc, leave_type, leave_startDate, leave_endDate) VALUES (%s, %s, %s, %s, %s, %s)"
     cursor = db_conn.cursor()
 
     try:
-        cursor.execute(insert_sql, (empId))
+        cursor.execute(insert_sql, (empId, name, desc, leaveType, startDate, endDate))
         db_conn.commit()
         flash("Leave applied!", 'green')
     except Exception as e:
