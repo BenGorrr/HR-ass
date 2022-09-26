@@ -13,6 +13,7 @@
 <h1 style="align-items: center;"><b>Employee Attendance</b></h1>
 
 <div class="scrollmenu">
+    <!--Repeater -->
     <table class="contentCenter">
         <thead>
           <tr>
@@ -52,8 +53,9 @@
           </tr>
         </thead>
         <tbody>
+          {% for empAttendance in empAttendances %}  <!--Start loop to take the data from the database -->
           <tr class="student">
-            <td class="name-col">Slappy the Frog</td>
+            <td> {{ empAttendance.empName }}</td>
             <td class="attend-col"><input type="checkbox"></td>
             <td class="attend-col"><input type="checkbox"></td>
             <td class="attend-col"><input type="checkbox"></td>
@@ -87,41 +89,7 @@
             <td class="attend-col"><input type="checkbox"></td>
             <td class="missed-col">0</td>
           </tr>
-          <tr class="student">
-            <td class="name-col">Lilly the Lizard</td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="attend-col"><input type="checkbox"></td>
-            <td class="missed-col">0</td>
-          </tr>
+          {% endfor %} <!--End loop -->
         </tbody>
       </table>
 </div>
