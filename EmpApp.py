@@ -1,5 +1,4 @@
-from crypt import methods
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, flash
 from pymysql import connections, cursors
 import os
 import boto3
@@ -203,7 +202,35 @@ def searchEditPayroll():
     # (C2) RENDER HTML PAGE
     return render_template("Payroll.html")
 
+@app.route("/applyLeave", methods=['POST'])
+def applyLeave():
+    data = request.form
+    empId = data['empId']
+    name = data['name']
+    leaveType = data['leaveType']
+    desc = data['desc']
+    startDate = data['datemin']
+    endDate = data['datemax']
+
+
+    print(request.form)
+
+    insert_sql = "INSERT INTO Leaves (emp_id, emp_name, leave_desc, leave_type, leave_startDate, leave_endDate) VALUES (%s, %s, %s, %s, %s, %s)"
+    cursor = db_conn.cursor()
+
+    try:
+        cursor.execute(insert_sql, (empId, name, desc, leaveType, startDate, endDate))
+        db_conn.commit()
+        flash("Leave applied!", 'green')
+    except Exception as e:
+        print(str(e))
+        flash('An error occured: '+ str(e), 'red')
+    finally:
+        cursor.close()
+
+    return redirect(url_for('leave'))
 
 
 if __name__ == '__main__':
+    app.secret_key = "76541"
     app.run(host='0.0.0.0', port=80, debug=True)
