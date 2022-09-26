@@ -189,6 +189,20 @@ def searchPayroll():
     # (C2) RENDER HTML PAGE
     return render_template("Payroll.html", usr=users[0])
 
+@app.route("/editPayroll", methods=['GET','POST'])
+def searchEditPayroll():
+    # (C1) SEARCH FOR USERS
+    if request.method == "POST":
+        data = dict(request.form)
+        print(data)
+        users = getusers(data["searchEmpPayroll"])
+        print(users)
+    else:
+        users = []
+    
+    # (C2) RENDER HTML PAGE
+    return render_template("Payroll.html")
+
 
 
 if __name__ == '__main__':
