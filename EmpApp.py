@@ -30,7 +30,20 @@ def payroll():
 
 @app.route("/attendance", methods=['GET', 'POST'])
 def attendance():
-    return render_template('Attendance.html')
+
+    empAttendances = getEmp()
+
+    return render_template('Attendance.html', empAttendances=empAttendances)
+
+@app.route("/update_attendance", methods=['POST'])
+def update_attendance():
+
+    data = request.form
+    print(data)
+
+    return redirect(url_for('attendance'))
+ 
+
 
 @app.route("/leave", methods=['GET', 'POST'])
 def leave():
