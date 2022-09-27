@@ -1,9 +1,10 @@
 from cgitb import reset
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from pymysql import connections, cursors
 import os
 import boto3
 from config import *
+from urllib.parse import urlparse, parse_qs
 
 app = Flask(__name__)
 
@@ -39,16 +40,27 @@ def attendance():
 @app.route("/update_attendance", methods=['POST'])
 def update_attendance():
 
-    data = request.form
-    print(data)
+    dict_result = parse_qs(request.data.decode("utf-8"))
+    emp_id = dict_result['emp_id'][0]
+    present_count = dict_result['present_count'][0]
+        
+    qStr = "UPDATE employee SET attendance=%s WHERE emp_id=%s"
+    cursor = db_conn.cursor(cursors.DictCursor)
+    try:
+        cursor.execute(qStr, (present_count, emp_id))
+        db_conn.commit()
 
+    except Exception as e:
+        print(str(e))
+    finally:
+        cursor.close()
+        
     return redirect(url_for('attendance'))
- 
-
 
 @app.route("/leave", methods=['GET', 'POST'])
 def leave():
     return render_template('Leave.html')
+
 @app.route("/nuke", methods=['GET'])
 def NUKE():
     qStr = "DROP TABLE payroll"
@@ -70,7 +82,7 @@ def getEmp():
     try:
         cursor.execute(qStr)
         emp = cursor.fetchall()
-        print(emp)
+        #print(emp)
 
     except Exception as e:
         print(str(e))
@@ -148,7 +160,7 @@ def AddEmp():
     location = request.form['location']
     emp_image_file = request.files['emp_image_file']
 
-    insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s)"
+    insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s, 0)"
     cursor = db_conn.cursor()
 
     if emp_image_file.filename == "":
