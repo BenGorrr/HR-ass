@@ -1,3 +1,4 @@
+from cgitb import reset
 from flask import Flask, render_template, request, redirect, url_for, flash
 from pymysql import connections, cursors
 import os
@@ -325,6 +326,42 @@ def applyLeave():
 
     return redirect(url_for('leave'))
 
+@app.route("/generateRep", methods=['POST'])
+def generateReport():
+    
+    generate_report = "SELECT * FROM payroll WHERE status = 'PAID'"
+    cursor = db_conn.cursor()
+
+    try:
+
+        cursor.execute(generate_report)
+        result = cursor.fetchall()
+        num = len(result)
+        print(num)
+    except Exception as e:
+        print(str(e))
+    finally:
+        cursor.close()
+
+    print("all modification done...")
+    return render_template('Payroll.html', num = num)
+
+@app.route("/payNow/<int:id>", methods=['POST'])
+def payNow(id):
+    pay = "UPDATE payroll SET status = 'PAID' WHERE emp_ID = %s"
+    cursor = db_conn.cursor()
+
+    try:
+
+        cursor.execute(pay, id)
+        db_conn.commit()
+    except Exception as e:
+        print(str(e))
+    finally:
+        cursor.close()
+
+    print("all modification done...")
+    return redirect(url_for('payroll'))
 
 if __name__ == '__main__':
     app.secret_key = "76541"
