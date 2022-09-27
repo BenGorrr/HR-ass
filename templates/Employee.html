@@ -38,6 +38,7 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Location</th>
+                <th>Attendance of the month</th>
             </tr>
             {% for emp in employees %}
             <tr>
@@ -45,6 +46,7 @@
                 <td>{{ emp.first_name }}</td>
                 <td>{{ emp.last_name }}</td>
                 <td>{{ emp.location }}</td>
+                <td>{{ emp.attendance }}</td>
             </tr>
             {% endfor %}
         </table>

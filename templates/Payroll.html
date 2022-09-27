@@ -13,6 +13,13 @@
 <!-- Page Content -->
 <div class="w3-padding-large" id="main">
     <!-- Header/Home -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="w3-panel w3-{{ category }}" role="alert"> {{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
         <h1 class="w3-jumbo"><span class="w3-hide-small">Payroll Page</h1>
     </header>
@@ -48,15 +55,15 @@
             <input type="search" id="searchEmp" name="searchEmp" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px">
             <input type="submit" value="SEARCH" style="padding: 6px; margin-left: 10px">
             </div><br>
-            {% if usr | length != 0 %}
+            {% if usr | length != 0 and empAttendance is defined and payable is defined %}
             <label for="empName" style="font-size: large; margin-right: 52px; padding-right: 78px; padding-bottom: 20px;">Employee Name:</label>
             <input type="text" id="empName" name="empName" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px;" disabled value="{{usr[2]}}"><br>
             <label for="empAttendance" style="font-size: large; margin-right: 52px; padding-right: 15px">Employee's Attendance:</label>
-            <input type="text" id="empAttendance" name="empAttendance" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px" disabled><br>
+            <input type="text" id="empAttendance" name="empAttendance" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px" disabled value="{{empAttendance}}"><br>
             <label for="empDailyRate" style="font-size: large; margin-right: 52px; padding-right: 15px">Daily Rate:</label>
             <input type="text" id="empDailyRate" name="empDailyRate" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px; margin-left: 120px" disabled value="{{usr[3]}}"><br>
             <label for="empPayable" style="font-size: large; margin-right: 114px; padding-right: 15px">Amount Payable:</label>
-            <input type="text" id="empPayable" name="empPayable" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px" disabled><br>
+            <input type="text" id="empPayable" name="empPayable" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px" disabled value="{{payable}}"><br>
             <label for="empPayStatus" style="font-size: large; margin-right: 170px; padding-right: 15px">Pay Status:</label>
             <input type="text" id="empPayStatus" name="empPayStatus" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px" disabled value="{{usr[6]}}"><br>    
                 
@@ -74,13 +81,13 @@
             {% endif %}
 
         </form>
-        {% if usr | length != 0 %}
+        {% if usr | length != 0 and empAttendance is defined and payable is defined%}
             <form action="{{ url_for('payNow', id=usr[1]) }}" method="POST">
         {% else %}
             <form action="" method="POST">
         {% endif %}
                 <p>
-                    {% if usr | length != 0 %}
+                    {% if usr | length != 0 and empAttendance is defined and payable is defined%}
                         {% if usr[6] == 'UNPAID' %}
                             <input id="payBtn" class="w3-button w3-light-grey w3-padding-large" type="submit" style="margin-left: 220px" value="PAY NOW">
                         {% else %}
@@ -96,12 +103,12 @@
     <br><br>
     <form action="/generateRep" method="POST">
         <input class="w3-button w3-light-grey w3-padding-large"type="submit" value="GENERATE PAYROLL REPORT" style= "margin-left: 400px; padding: 30px;"><br><br>
-        {% if num is defined %}
+        {% if num is defined and totalAmtPaid is defined %}
             {% if num !=0 %}
                 <label for="totalEmpPaid" style="font-size: large; margin-right: 52px; padding-right: 78px; padding-bottom: 20px;margin-left: 200px;">Total Number of Employee Paid:</label>
                 <input type="text" id="totalEmpPaid" name="totalEmpPaid" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px;" disabled value="{{num}}"><br>
                 <label for="totalAmountPaid" style="font-size: large; margin-right: 232px; padding-right: 15px; margin-left: 200px;">Total Amount Paid:</label>
-                <input type="text" id="totalAmountPaid" name="totalAmountPaid" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px" disabled><br>
+                <input type="text" id="totalAmountPaid" name="totalAmountPaid" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px" disabled value="{{totalAmtPaid}}"><br>
             {% else %}
                 <label for="totalEmpPaid" style="font-size: large; margin-right: 52px; padding-right: 78px; padding-bottom: 20px; margin-left: 200px;">Total Number of Employee Paid:</label>
                 <input type="text" id="totalEmpPaid" name="totalEmpPaid" style="padding-left: 25px; padding-right: 25px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px;" disabled value="0 Employee Paid"><br>

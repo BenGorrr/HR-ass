@@ -22,7 +22,7 @@ function submitAttendance(emp_id) {
     contentType: "application/json",
     data: {"emp_id": emp_id, "present_count": present_count },
     success: function(response) {
-      $("#attendance"+emp_id).html(present_count);
+      window.location.replace("{{url_for('attendance')}}")
     }
   });
 }
@@ -32,6 +32,14 @@ function submitAttendance(emp_id) {
 {% endblock %}
 
 {% block content %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+    <div class="w3-panel w3-{{ category }}" role="alert"> {{ message }}</div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
 
 <h1 style="align-items: center;"><b>Employee Attendance</b></h1>
 

@@ -50,6 +50,7 @@ def update_attendance():
         cursor.execute(qStr, (present_count, emp_id))
         db_conn.commit()
 
+
     except Exception as e:
         print(str(e))
     finally:
@@ -220,6 +221,7 @@ def AddSalary():
 
         cursor.execute(insert_sql, (empID, empName, int(empRate), int(empOT), empType))
         db_conn.commit()
+        flash("Added new payroll!", 'green')
     
     finally:
         cursor.close()
@@ -228,7 +230,7 @@ def AddSalary():
     return render_template('Payroll.html')
  
 # (B) HELPER FUNCTION - SEARCH USERS
-def getusers(search):
+def getEmpPayroll(search):
     cursor = db_conn.cursor()
     cursor.execute(
         "SELECT * FROM payroll WHERE emp_ID=%s",
@@ -244,13 +246,18 @@ def searchPayroll():
     if request.method == "POST":
         data = dict(request.form)
         print(data)
-        users = getusers(data["searchEmp"])
-        print(users)
+        if data['searchEmp'] == '':
+            return redirect(url_for('payroll'))
+
+        payroll = getEmpPayroll(data["searchEmp"])
+        salary, _ = getSalary(data["searchEmp"])
+        empAttendance = getAttendance(data["searchEmp"])
+        print(payroll[0], salary, empAttendance)
     else:
-        users = []
+        payroll = []
     
     # (C2) RENDER HTML PAGE
-    return render_template("Payroll.html", usr=users[0])
+    return render_template("Payroll.html", usr=payroll[0], empAttendance=empAttendance, payable=salary)
 
 
 def getLastID():
@@ -271,7 +278,7 @@ def searchEditPayroll():
     if request.method == "POST":
         data = dict(request.form)
         print(data)
-        users = getusers(data["searchEmpPayroll"])
+        users = getEmpPayroll(data["searchEmpPayroll"])
         print(users)
     else:
         users = []
@@ -338,11 +345,12 @@ def applyLeave():
 
     return redirect(url_for('leave'))
 
+
 @app.route("/generateRep", methods=['POST'])
 def generateReport():
     
     generate_report = "SELECT * FROM payroll WHERE status = 'PAID'"
-    cursor = db_conn.cursor()
+    cursor = db_conn.cursor(cursors.DictCursor)
 
     try:
 
@@ -350,22 +358,65 @@ def generateReport():
         result = cursor.fetchall()
         num = len(result)
         print(num)
+        totalAmtPaid = 0
+        for res in result:
+            totalAmtPaid += res['totalPaid']
+        print(totalAmtPaid)
+
     except Exception as e:
         print(str(e))
     finally:
         cursor.close()
 
     print("all modification done...")
-    return render_template('Payroll.html', num = num)
+    return render_template('Payroll.html', num = num, totalAmtPaid = totalAmtPaid)
+
+def getSalary(emp_id):
+    qStr = "SELECT employee.attendance, payroll.emp_Rate, payroll.totalPaid FROM employee INNER JOIN payroll ON employee.emp_id=payroll.emp_ID WHERE employee.emp_id=%s"
+
+    cursor = db_conn.cursor(cursors.DictCursor)
+    salary = 0
+    try:
+        cursor.execute(qStr, (emp_id))
+        result = cursor.fetchone()
+        print(result)
+        if result['attendance'] and result['emp_Rate']:
+            salary = result['attendance'] * result['emp_Rate']
+    except Exception as e:
+        print(str(e))
+    finally:
+        cursor.close()
+
+    return (salary, result['totalPaid']) 
+
+def getAttendance(emp_id):
+    qStr = "SELECT employee.attendance FROM employee WHERE employee.emp_id=%s"
+
+    cursor = db_conn.cursor(cursors.DictCursor)
+    salary = 0
+    try:
+        cursor.execute(qStr, (emp_id))
+        result = cursor.fetchone()
+    except Exception as e:
+        print(str(e))
+    finally:
+        cursor.close()
+
+    return result['attendance']
+
 
 @app.route("/payNow/<int:id>", methods=['POST'])
 def payNow(id):
-    pay = "UPDATE payroll SET status = 'PAID' WHERE emp_ID = %s"
+
+    salary, totalPaid = getSalary(id)
+    totalPaid += salary
+
+    pay = "UPDATE payroll SET status = 'PAID', totalPaid = %s WHERE emp_ID = %s"
     cursor = db_conn.cursor()
 
     try:
 
-        cursor.execute(pay, id)
+        cursor.execute(pay, (totalPaid, id))
         db_conn.commit()
     except Exception as e:
         print(str(e))
